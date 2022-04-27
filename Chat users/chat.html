@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Chat | ChatApp</title>
+    <link href="icon.png" rel="icon" type="image">
+    <meta name="viewport" content="width=device-width initial-scale=1 user-scalable=no">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="chat">
+
+    <div class="chat__sidebar">
+        <div id="users"></div>
+    </div>
+
+    <div class="chat__main">
+
+        <ol id="messages" class="chat__messages"></ol>
+
+        <div class="chat__footer">
+            <form id="message-form">
+                <input id="m" type="text" name="message" placeholder="message" autofocus autocomplete="off">
+                <button type="submit">Send</button>
+            </form>
+            <button id="send-location"> Send Location</button>
+        </div>
+    </div>
+
+    <script id="message-template" type="text/template">
+        <li class="message">
+            <div class="message__title">
+                <h4>{{from}}</h4>
+                <span>{{createdAt}}</span>
+            </div>
+            <div class="message__body">
+                <p>{{text}}</p>
+            </div>
+        </li>
+        </script>
+    <script id="location-message-template" type="text/template">
+            <li class="message">
+                <div class="message__title">
+                    <h4>{{from}}</h4>
+                    <span>{{createdAt}}</span>
+                </div>
+                <div class="message__body">
+                    <p>
+                    <a href="{{url}}" target="_blank">My current location</a>
+                    </p>
+                </div>
+            </li>
+            </script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/libs/jquery-3.3.1.min.js"></script>
+    <script src="js/libs/moment.js"></script>
+    <script src="js/libs/deparam.js"></script>
+    <script src="js/libs/mustache.js"></script>
+    <script src="js/chat.js"> </script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        $('form').submit(function () {
+            socket.emit('chatMessage', $('#m').val());
+            $('#m').val('');
+            return false;
+        });
+        socket.on('connect', function () {
+            socket.emit('setUser', $('.usernameInput').val().trim());
+        });
+        socket.on('chatMessage', function (msg) {
+            $('#messages').append($('<li>').text(msg));
+        });
+        socket.on('newUser', function (data) {
+            $('#newUserMessage').text(data);
+        });        
+    </script>
+</body>
+
+</html>
