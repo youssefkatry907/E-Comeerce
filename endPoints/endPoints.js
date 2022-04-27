@@ -1,0 +1,17 @@
+const ADD_POST = "post:ADD_POST";
+const UPDATE_POST = "post:UPDATE_POST";
+const DELETE_POST = "post:DELETE_POST";
+const GET_ALL_PENDING_POSTS = "post:GET_ALL_PENDING_POSTS";
+const GET_POST_BY_ID = "post:GET_POST_BY_ID";
+const APPROVE_POST = "post:APPROVE_POST";
+const DECLINE_POST = "post:DECLINE_POST";
+
+module.exports = {
+    GET_POST_BY_ID,
+    ADD_POST,
+    UPDATE_POST,
+    DELETE_POST,
+    GET_ALL_PENDING_POSTS,
+    APPROVE_POST,
+    DECLINE_POST
+}
